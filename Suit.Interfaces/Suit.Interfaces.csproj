@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>C:\Users\federico.barresi\.nuget\packages\ninject\3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

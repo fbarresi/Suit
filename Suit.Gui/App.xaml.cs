@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace Suit
+namespace Suit.Gui
 {
 	/// <summary>
 	/// Interaction logic for App.xaml
