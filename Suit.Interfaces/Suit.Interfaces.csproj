@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>C:\Users\federico.barresi\.nuget\packages\log4net\2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>C:\Users\federico.barresi\.nuget\packages\ninject\3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive">
+      <HintPath>C:\Users\federico.barresi\.nuget\packages\system.reactive\4.0.0\lib\net46\System.Reactive.dll</HintPath>
     </Reference>
   </ItemGroup>
 

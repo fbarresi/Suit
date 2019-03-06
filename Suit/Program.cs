@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -10,6 +11,7 @@ using Ninject;
 using Suit.Gui;
 using Suit.Gui.ViewModels;
 using Suit.Gui.Views;
+using Suit.Interfaces;
 using Suit.Interfaces.Commons;
 using Suit.Logic;
 
@@ -27,6 +29,7 @@ namespace Suit
 
 			using (IKernel kernel = new StandardKernel())
 			{
+				CreateLogger();
 				LoadModules(kernel);
 
 				var viewModelFactory = kernel.Get<ViewModelLocator>();
@@ -40,6 +43,12 @@ namespace Suit
 				application.Run(mainWindow);
 				application.Shutdown();
 			}
+		}
+
+		private static void CreateLogger()
+		{
+			log4net.Config.XmlConfigurator.Configure(new FileInfo("log.config"));
+			LogManager.CreateRepository(Constants.LoggingRepositoryName);
 		}
 
 		private static void LoadModules(IKernel kernel)

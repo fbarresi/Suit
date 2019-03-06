@@ -4,8 +4,10 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using log4net;
 using ReactiveUI;
 using Suit.Interfaces.Commons;
+using Suit.Interfaces.Logging;
 
 namespace Suit.Gui.ViewModels
 {
@@ -13,7 +15,8 @@ namespace Suit.Gui.ViewModels
 	{
 		protected CompositeDisposable Disposables = new CompositeDisposable();
 		private bool disposed;
-
+		private string title;
+		protected ILog Logger { get; private set; } = LoggerFactory.GetLogger();
 		public virtual void Dispose()
 		{
 			Dispose(true);
@@ -38,6 +41,17 @@ namespace Suit.Gui.ViewModels
 		protected void raisePropertyChanged([CallerMemberName] string propertyName = "")
 		{
 			this.RaisePropertyChanged(propertyName);
+		}
+
+		public string Title
+		{
+			get => title;
+			set
+			{
+				if (value == title) return;
+				title = value;
+				raisePropertyChanged();
+			}
 		}
 
 		~ViewModelBase()
