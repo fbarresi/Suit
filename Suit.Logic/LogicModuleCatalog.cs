@@ -1,5 +1,7 @@
 ﻿using System;
 using Ninject.Modules;
+using Suit.Interfaces.Services;
+using Suit.Logic.Services;
 
 namespace Suit.Logic
 {
@@ -7,7 +9,7 @@ namespace Suit.Logic
 	{
 		public override void Load()
 		{
-			
+			Bind<IFileParserService>().To<FileParserService>();
 		}
 	}
 }

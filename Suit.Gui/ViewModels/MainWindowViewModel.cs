@@ -101,6 +101,10 @@ namespace Suit.Gui.ViewModels
 			try
 			{
 				Logger.Info($"Opening file: {file}");
+				var plotViewModel = viewModelFactory.CreateViewModel<FileInfo, DataPlotViewModel>(file);
+				plotViewModel.Title = file.Name;
+				plotViewModel.AddDisposableTo(Disposables);
+				Views.Add(plotViewModel);
 			}
 			catch (Exception ex)
 			{

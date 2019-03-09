@@ -9,6 +9,8 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
              xmlns:behaviors="clr-namespace:Suit.Gui.Behaviors"
+             xmlns:viewModels="clr-namespace:Suit.Gui.ViewModels"
+             xmlns:views="clr-namespace:Suit.Gui.Views"
              DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
              Title="SUIT"
@@ -88,7 +90,7 @@
             ClosingItemCallback="{Binding ClosingTabItemHandler}"
             IsTabStop="True"
             ItemsSource="{Binding Views}"
-            HeaderMemberPath="Header"
+            HeaderMemberPath="Title"
             SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             ShowDefaultCloseButton="True"
             TextElement.Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=(TextElement.Foreground)}">
@@ -96,7 +98,11 @@
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController />
             </dragablz:TabablzControl.InterTabController>
-            
+            <dragablz:TabablzControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type viewModels:DataPlotViewModel}">
+                    <views:DataPlotView DataContext="{Binding}" />
+                </DataTemplate>
+            </dragablz:TabablzControl.ContentTemplate>
         </dragablz:TabablzControl>
     </dockablz:Layout>
 </mah:MetroWindow>
