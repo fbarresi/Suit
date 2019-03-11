@@ -86,17 +86,18 @@
 
     <dockablz:Layout>
         <dragablz:TabablzControl
+            x:Name="TabablzControl"
             Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Background}"
             ClosingItemCallback="{Binding ClosingTabItemHandler}"
             IsTabStop="True"
             ItemsSource="{Binding Views}"
             HeaderMemberPath="Title"
-            SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SelectedView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             ShowDefaultCloseButton="True"
             TextElement.Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=(TextElement.Foreground)}">
             
             <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController />
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient, Source={StaticResource Locator}}" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.ContentTemplate>
                 <DataTemplate DataType="{x:Type viewModels:DataPlotViewModel}">

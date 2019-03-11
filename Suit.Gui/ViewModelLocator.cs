@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Dragablz;
+using Ninject;
 using Ninject.Parameters;
 using Suit.Gui.ViewModels;
 using Suit.Interfaces.Commons;
@@ -14,15 +15,20 @@ namespace Suit.Gui
 
 		public ViewModelLocator()
 		{
-			Kernel.Bind<MainWindowViewModel>().To<MainWindowViewModel>().InSingletonScope();
+			BindServices();
+		}
+
+		private void BindServices()
+		{
+			Kernel.Bind<MainWindowViewModel>().To<MainWindowViewModel>();
+			Kernel.Bind<IInterTabClient>().To<InterTabClient>();
 		}
 
 		public ViewModelLocator(IKernel kernel)
 		{
 			Kernel = kernel;
 			kernel.Bind<IViewModelFactory, IInstanceCreator>().ToConstant(this);
-
-			Kernel.Bind<MainWindowViewModel>().To<MainWindowViewModel>().InSingletonScope();
+			BindServices();
 		}
 
 		public static IInstanceCreator DesignInstanceCreator => s_Instance ?? (s_Instance = new ViewModelLocator());
@@ -30,6 +36,7 @@ namespace Suit.Gui
 		public static IViewModelFactory DesignViewModelFactory => s_Instance ?? (s_Instance = new ViewModelLocator());
 
 		public MainWindowViewModel MainWindowViewModel => Kernel.Get<MainWindowViewModel>();
+		public IInterTabClient InterTabClient => Kernel.Get<IInterTabClient>();
 
 		public T Create<T>()
 		{

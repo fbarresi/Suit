@@ -48,6 +48,7 @@ namespace Suit.Gui.ViewModels
 
 		public ReactiveCommand<object, Unit> DropCommand { get; set; }
 
+
 		public override void Init()
 		{
 			Logger.Debug("Initialize main window view model");
@@ -105,6 +106,7 @@ namespace Suit.Gui.ViewModels
 				plotViewModel.Title = file.Name;
 				plotViewModel.AddDisposableTo(Disposables);
 				Views.Add(plotViewModel);
+				SelectedView = Views.LastOrDefault();
 			}
 			catch (Exception ex)
 			{

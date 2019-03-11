@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using DynamicData;
+using DynamicData.Binding;
 using OxyPlot;
 using OxyPlot.Series;
 using Suit.Interfaces.Services;
@@ -12,7 +15,7 @@ namespace Suit.Gui.ViewModels
 	{
 		private readonly FileInfo file;
 		private readonly IFileParserService fileParserService;
-		private PlotModel plotModel;
+		private ObservableCollection<ScatterPoint> points = new ObservableCollection<ScatterPoint>();
 
 		public DataPlotViewModel(FileInfo model, IFileParserService fileParserService)
 		{
@@ -23,22 +26,18 @@ namespace Suit.Gui.ViewModels
 		public override void Init()
 		{
 			var parsedFile = fileParserService.ParseFileForPlot(file);
-			var scatterSerie = new ScatterSeries(){MarkerType = MarkerType.Circle};
-			scatterSerie.Points.AddRange(parsedFile.Points
+			Points.AddRange(parsedFile.Points
 				.Select(coords => new ScatterPoint(coords[0], coords[1])).ToArray());
-			var model = new PlotModel(){Title = parsedFile.Name};
-			model.Series.Add(scatterSerie);
-			PlotModel = model;
+			Title = parsedFile.Name;
 		}
 
-
-		public PlotModel PlotModel
+		public ObservableCollection<ScatterPoint> Points
 		{
-			get => plotModel;
+			get => points;
 			set
 			{
-				if (Equals(value, plotModel)) return;
-				plotModel = value;
+				if (Equals(value, points)) return;
+				points = value;
 				raisePropertyChanged();
 			}
 		}

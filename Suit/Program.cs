@@ -13,6 +13,7 @@ using Suit.Gui.ViewModels;
 using Suit.Gui.Views;
 using Suit.Interfaces;
 using Suit.Interfaces.Commons;
+using Suit.Interfaces.Logging;
 using Suit.Logic;
 
 namespace Suit
@@ -29,19 +30,27 @@ namespace Suit
 
 			using (IKernel kernel = new StandardKernel())
 			{
-				CreateLogger();
-				LoadModules(kernel);
+				try
+				{
+					CreateLogger();
+					LoadModules(kernel);
 
-				var viewModelFactory = kernel.Get<ViewModelLocator>();
-				var application = CreateApplication(viewModelFactory);
+					var viewModelFactory = kernel.Get<ViewModelLocator>();
+					var application = CreateApplication(viewModelFactory);
 
-				var mainWindowViewModel = viewModelFactory.CreateViewModel<MainWindowViewModel>();
+					var mainWindowViewModel = viewModelFactory.CreateViewModel<MainWindowViewModel>();
 
-				var mainWindow = kernel.Get<MainWindow>();
-				mainWindow.DataContext = mainWindowViewModel;
+					var mainWindow = kernel.Get<MainWindow>();
+					mainWindow.DataContext = mainWindowViewModel;
 
-				application.Run(mainWindow);
-				application.Shutdown();
+					application.Run(mainWindow);
+					application.Shutdown();
+				}
+				catch (Exception e)
+				{
+					LoggerFactory.GetLogger().Error("Unhandled exeption", e);
+					throw e;
+				}
 			}
 		}
 
