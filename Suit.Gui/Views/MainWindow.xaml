@@ -50,7 +50,7 @@
                 <TextBlock
                     VerticalAlignment="Center"
                     Opacity="0.6"
-                    Text="v1.0" />
+                    Text="{Binding Version}" />
             </StackPanel>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>

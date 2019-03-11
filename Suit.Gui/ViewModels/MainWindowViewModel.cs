@@ -24,6 +24,8 @@ namespace Suit.Gui.ViewModels
 	{
 		private readonly IViewModelFactory viewModelFactory;
 		private ViewModelBase selectedView;
+		private string version;
+
 		public MainWindowViewModel(IViewModelFactory viewModelFactory)
 		{
 			this.viewModelFactory = viewModelFactory;
@@ -59,6 +61,19 @@ namespace Suit.Gui.ViewModels
 			DropCommand = ReactiveCommand.CreateFromTask<object, Unit>(OpenDroppedFile)
 				.SetupErrorHandling(Logger, Disposables);
 
+			var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			Version = $"v.{version.Major}.{version.Minor}";
+		}
+
+		public string Version
+		{
+			get => version;
+			set
+			{
+				if (value == version) return;
+				version = value;
+				raisePropertyChanged();
+			}
 		}
 
 		private Task<Unit> OpenDroppedFile(object arg)
