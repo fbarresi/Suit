@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <ApplicationIcon>tie.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
