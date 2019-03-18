@@ -10,6 +10,7 @@ namespace Suit.Logic
 		public override void Load()
 		{
 			Bind<IFileParserService>().To<FileParserService>();
+			Bind<ICommandLineArgumentsService>().To<CommandLineArgumentsService>().InSingletonScope();
 		}
 	}
 }

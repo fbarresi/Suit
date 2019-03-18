@@ -14,6 +14,7 @@ using Suit.Gui.Views;
 using Suit.Interfaces;
 using Suit.Interfaces.Commons;
 using Suit.Interfaces.Logging;
+using Suit.Interfaces.Services;
 using Suit.Logic;
 
 namespace Suit
@@ -34,6 +35,8 @@ namespace Suit
 				{
 					CreateLogger();
 					LoadModules(kernel);
+					var commandLineArgumentsService = kernel.Get<ICommandLineArgumentsService>();
+					commandLineArgumentsService.SetArguments(args);
 
 					var viewModelFactory = kernel.Get<ViewModelLocator>();
 					var application = CreateApplication(viewModelFactory);

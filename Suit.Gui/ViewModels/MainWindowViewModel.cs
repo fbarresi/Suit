@@ -17,18 +17,21 @@ using ReactiveUI;
 using Suit.Gui.Extensions;
 using Suit.Interfaces.Commons;
 using Suit.Interfaces.Extensions;
+using Suit.Interfaces.Services;
 
 namespace Suit.Gui.ViewModels
 {
 	public class MainWindowViewModel : ViewModelBase
 	{
 		private readonly IViewModelFactory viewModelFactory;
+		private readonly ICommandLineArgumentsService argumentsService;
 		private ViewModelBase selectedView;
 		private string version;
 
-		public MainWindowViewModel(IViewModelFactory viewModelFactory)
+		public MainWindowViewModel(IViewModelFactory viewModelFactory, ICommandLineArgumentsService argumentsService)
 		{
 			this.viewModelFactory = viewModelFactory;
+			this.argumentsService = argumentsService;
 		}
 
 		public ReactiveCommand<Unit, Unit> OpenFileCommand { get; set; }
@@ -63,6 +66,12 @@ namespace Suit.Gui.ViewModels
 
 			var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 			Version = $"v.{version.Major}.{version.Minor}";
+
+			argumentsService.Arguments
+				.Where(strings => strings != null)
+				.Do(s => Logger.Debug($"CommandLineParameters: {string.Join(",", s)}"))
+				.Subscribe()
+				.AddDisposableTo(Disposables);
 		}
 
 		public string Version
