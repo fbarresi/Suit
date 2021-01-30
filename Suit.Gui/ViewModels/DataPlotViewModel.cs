@@ -5,9 +5,13 @@ using System.Linq;
 using System.Windows;
 using DynamicData;
 using DynamicData.Binding;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Helpers;
+using LiveCharts.Wpf;
 using OxyPlot;
-using OxyPlot.Series;
 using Suit.Interfaces.Services;
+using ScatterPoint = OxyPlot.Series.ScatterPoint;
 
 namespace Suit.Gui.ViewModels
 {
@@ -15,7 +19,7 @@ namespace Suit.Gui.ViewModels
 	{
 		private readonly FileInfo file;
 		private readonly IFileParserService fileParserService;
-		private ObservableCollection<ScatterPoint> points = new ObservableCollection<ScatterPoint>();
+		private SeriesCollection series = new SeriesCollection();
 
 		public DataPlotViewModel(FileInfo model, IFileParserService fileParserService)
 		{
@@ -26,18 +30,21 @@ namespace Suit.Gui.ViewModels
 		public override void Init()
 		{
 			var parsedFile = fileParserService.ParseFileForPlot(file);
-			Points.AddRange(parsedFile.Points
-				.Select(coords => new ScatterPoint(coords[0], coords[1])).ToArray());
-			Title = parsedFile.Name;
+			var serie = new ScatterSeries()
+			{
+				Values = parsedFile.Points.Select(p => new ObservablePoint(p[0], p[1])).AsChartValues(),
+				Title = parsedFile.Name
+			};
+			Series.Add(serie);
 		}
 
-		public ObservableCollection<ScatterPoint> Points
+		public SeriesCollection Series
 		{
-			get => points;
+			get => series;
 			set
 			{
-				if (Equals(value, points)) return;
-				points = value;
+				if (Equals(value, series)) return;
+				series = value;
 				raisePropertyChanged();
 			}
 		}

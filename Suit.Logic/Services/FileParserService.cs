@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Suit.Interfaces.Models;
@@ -10,8 +11,23 @@ namespace Suit.Logic.Services
 	{
 		public ParsedFile ParseFileForPlot(FileInfo fileInfo)
 		{
-			var parsed = new ParsedFile {Name = fileInfo.Name, Points = File.ReadAllLines(fileInfo.FullName).Select(s => s.Split(';').Select(double.Parse).ToArray()).ToArray()};
+			var parsed = new ParsedFile {Name = fileInfo.Name, Points = ReadAllLines(fileInfo.FullName)};
 			return parsed;
+		}
+
+		private double[][] ReadAllLines(string file)
+		{
+			var points = new List<double[]>();
+			using (StreamReader sr = File.OpenText(file))
+			{
+				string line = string.Empty;
+				while ((line = sr.ReadLine()) != null)
+				{
+					points.Add(line.Split(';').Select(double.Parse).ToArray());
+				}
+			}
+
+			return points.ToArray();
 		}
 	}
 }

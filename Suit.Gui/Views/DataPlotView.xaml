@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Suit.Gui.Views"
-             xmlns:oxy="http://oxyplot.org/wpf"
-             xmlns:oxyPlot="clr-namespace:OxyPlot;assembly=OxyPlot"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <!--<oxy:PlotView Model="{Binding PlotModel}"/>-->
@@ -17,9 +16,20 @@
                                    ItemsSource="{Binding Points} "/>-->
     <!--</oxy:Plot.Series>-->
     <!--</oxy:Plot>-->
-    <Grid>
+
+    <!--<Grid>
         <oxy:Plot Title="{Binding Title}" IsLegendVisible="True">
             <oxy:ScatterSeries ItemsSource="{Binding Points}" MarkerType="Circle" MarkerFill="Black"/>
         </oxy:Plot>
+    </Grid>-->
+
+    <Grid>
+        <lvc:CartesianChart LegendLocation="Bottom"
+                            Series="{Binding Series}">
+            <lvc:CartesianChart.AxisY>
+                <!--setting the axis unit improved the labels rounding rule-->
+                <lvc:Axis Unit="1"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
     </Grid>
 </UserControl>
